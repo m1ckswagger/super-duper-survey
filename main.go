@@ -16,7 +16,7 @@ func main() {
 }
 
 func render(c *gin.Context, data gin.H, templateName string) {
-	switch c.Request.Header.Get("Content-Type") {
+	switch c.Request.Header.Get("Accept") {
 	case "application/json":
 		c.JSON(http.StatusOK, data["payload"])
 	case "application/xml":
