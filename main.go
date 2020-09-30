@@ -2,13 +2,14 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 	"strconv"
 
 	"github.com/gin-contrib/logger"
-	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
+	ldap "github.com/go-ldap/ldap/v3"
 	"github.com/gomodule/redigo/redis"
 	"github.com/google/uuid"
 	"github.com/rs/zerolog"
@@ -44,6 +45,37 @@ var users = map[string]string{
 var cache redis.Conn
 
 func main() {
+	l, err := ldap.DialURL(fmt.Sprintf("ldaps://ldap.sipwise.com"))
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer l.Close()
+
+	err = l.UnauthenticatedBind("")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	username := "mberger"
+	searchRequest := ldap.NewSearchRequest(
+		"dc=sipwise,dc=com",
+		ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false,
+		fmt.Sprintf("(&(objectClass=organizationalPerson)(uid=%s))", username),
+		[]string{"dn"},
+		nil,
+	)
+	sr, err := l.Search(searchRequest)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	if len(sr.Entries) == 0 {
+		fmt.Println("No results found")
+		return
+	}
+	userdn := sr.Entries[0].DN
+	fmt.Println(userdn)
 	initCache()
 	gin.SetMode(gin.ReleaseMode)
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)
@@ -62,8 +94,8 @@ func main() {
 			NoColor: false,
 		},
 	)
-
 	router := gin.Default()
+	router.LoadHTMLGlob("templates/*")
 	router.Use(logger.SetLogger())
 	// Custom logger
 	subLog := zerolog.New(logFileJSON).With().Str("service", "shardik").Logger()
@@ -72,7 +104,20 @@ func main() {
 		UTC:      true,
 		SkipPath: []string{"/api"},
 	}))
-	router.Use(static.Serve("/", static.LocalFile("./views", true)))
+	//router.Use(static.Serve("/", static.LocalFile("./views", true)))
+
+	router.GET("/", func(c *gin.Context) {
+		c.HTML(
+			// Set the HTTP status to 200 (OK)
+			http.StatusOK,
+			// Use the index.html template
+			"index.html",
+			// pass the data that the page uses (in this case, 'title')
+			gin.H{
+				"title": "Shardik",
+			},
+		)
+	})
 
 	api := router.Group("/api")
 	{
@@ -85,7 +130,7 @@ func main() {
 		api.POST("/jokes/like/:jokeID", LikeJokeHandler)
 		api.POST("/login", Login)
 	}
-	router.Run(":3000")
+	router.Run(":8080")
 }
 
 func initCache() {
@@ -125,6 +170,7 @@ func Login(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
 	}
+	fmt.Println(creds)
 	expectedPassword, ok := users[creds.Username]
 	if !ok || expectedPassword != creds.Password {
 		c.AbortWithStatus(http.StatusUnauthorized)
