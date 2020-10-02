@@ -2,13 +2,28 @@ package main
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
 
 var router *gin.Engine
+var ocaq *Catalog
+var sheff *Catalog
+var ocai *CatalogOCAI
 
 func main() {
+	ocaq = NewCatalog("data/ocaq.txt", "data/ocaq.json", []string{"Yes", "No"})
+	sheff = NewCatalog("data/sheffield.txt", "data/sheffield.json", []string{
+		"Strongly disagree",
+		"Disagree",
+		"Neutral",
+		"Agree",
+		"Strongly Agree",
+	})
+	ocai = generateOCAICatalog()
+	ocai.WriteJSON("data/ocai.json")
+	os.Exit(1)
 	router = gin.Default()
 	router.LoadHTMLGlob("templates/*")
 	initializeRoutes()
