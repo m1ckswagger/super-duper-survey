@@ -10,9 +10,7 @@ import (
 func showIndexPage(c *gin.Context) {
 	articles := getAllArticles()
 
-	render(c, gin.H{
-		"title":   "Home Page",
-		"payload": articles}, "index.html")
+	render(c, gin.H{"title": "Home Page", "payload": articles}, "index.html")
 }
 
 func getArticle(c *gin.Context) {
