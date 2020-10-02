@@ -1,0 +1,400 @@
+{
+ "questions": [
+  {
+   "id": 1,
+   "question": "My company’s core purpose (or mission and vision) inspires we to work with enthusiasm and commitment.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 2,
+   "question": "My company has clearly established strategic objectives to align priorities.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 3,
+   "question": "My work group’s priorities are clearly aligned with the company’s strategic objectives and with other groups who depend on us.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 4,
+   "question": "I can see a clear linkage between my work, my group’s priorities and the company’s strategic objectives",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 5,
+   "question": "My company has clearly established core values, including business ethics principles, to guide behaviors.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 6,
+   "question": "Roles, authorities and accountabilities for all business-critical activities, especially those for quality and safety management, are clearly established and well understood by all stakeholders.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 7,
+   "question": "People in business-critical roles, especially those for quality and safety management, are fully aware of their responsibilities and are competent to carry them out.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 8,
+   "question": "My company has a documented, systematic process to identify, assess and manage to a level as low as reasonably practicable (ALARP) all risks to people, assets, the environment and the company’s reputation.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 9,
+   "question": "There are sufficient people in my company who have been trained on incident management, including reporting, investigation, root causal analysis and corrective actions.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 10,
+   "question": "I am well informed of the risks in my work and the way my company and I are supposed to manage them.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 11,
+   "question": "I do a risk assessment before starting any task.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 12,
+   "question": "I worry about whether I am recognizing all the risks and managing them appropriately.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 13,
+   "question": "Work stresses are at a tolerable level and I am able to fully focus on the task at hand and be mindful of risks and any abnormal events as they arise during my work.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 14,
+   "question": "Business-critical activities are closely monitored and managed to assure that they fully meet customer expectations.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 15,
+   "question": "I feel a deep sense of personal responsibility for all the things I commit to do. I expect to be held accountable if I fail to do what I promise.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 16,
+   "question": "If people in my group fail to do what they promise, they will at least be held accountable for an after-action review to determine what will be done to prevent repeated shortcomings, and may suffer consequences in pay and/or promotion potential.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 17,
+   "question": "I have frequent one-to-one discussions with my supervisor to discuss how my goals align with the group and company goals, my performance toward those goals and my personal development plan.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 18,
+   "question": "My supervisor is helping me achieve my full potential by providing ongoing coaching to improve my performance and recognition for my successes.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 19,
+   "question": "All managers know what is happening in our organization and where all the problems are – the workforce knows exactly what our managers expect – there are no mixed messages.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 20,
+   "question": "Because managers and workers are aligned and show two-way trust there is less need for bureaucracy, audits and supervision, so workload is decreasing.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 21,
+   "question": "Everyone in my work group collaborates with each other and with stakeholders in other groups to meet internal and external customer expectations. ",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 22,
+   "question": "I can report an incident without fear of disciplinary action unless I have been reckless or willfully negligent.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 23,
+   "question": "My company has a documented process for determining whether disciplinary action is appropriate for those involved in incidents or accidents.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 24,
+   "question": "I feel free to speak my mind about risks without fear of negative consequences.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 25,
+   "question": "My company has an easy-to-use system for reporting incidents.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 26,
+   "question": "I frequently report incidents from which others might learn.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 27,
+   "question": "A high rate of incident reporting is seen as a good thing in my company.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 28,
+   "question": "Incident reports are investigated to find root causes and to take preventive actions.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 29,
+   "question": "Incident investigations focus on learning rather than on assigning blame.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 30,
+   "question": "I work proactively with management to identify needs for exceptions to rules before tasks are begun in order to give management sufficient time to assess the risks associated with the exception.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 31,
+   "question": "I comply with the rules while doing a task.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 32,
+   "question": "I work with stakeholders to suggest ways to improve training, tools, processes, procedures and the rules themselves if I see a better way.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 33,
+   "question": "Lessons learned from incidents are widely shared.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 34,
+   "question": "My company actively monitors lessons learned for incidents in other companies and other industries.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 35,
+   "question": "My company actively benchmarks its performance and seeks to learn best practices from competitors and other industries.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  },
+  {
+   "id": 36,
+   "question": "My company has a formal process to review, at least annually, its performance toward its strategic objectives and the effectiveness of its risk management system.",
+   "options": [
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+   ]
+  }
+ ]
+}

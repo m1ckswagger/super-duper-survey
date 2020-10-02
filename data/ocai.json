@@ -1,0 +1,148 @@
+{
+ "categories": [
+  {
+   "id": 1,
+   "title": "Dominant Characteristics",
+   "a": {
+    "question": "The organization is a very personal place. It is like an extended family. People seem to share a lot of themselves.",
+    "now": 0,
+    "preferred": 0
+   },
+   "b": {
+    "question": "The organization is a very dynamic entrepreneurial place. People are\twilling to stick their necks out and take risks.",
+    "now": 0,
+    "preferred": 0
+   },
+   "c": {
+    "question": "The organization is very results oriented. A major concern is with getting the job done. People are very competitive and achievement\toriented.",
+    "now": 0,
+    "preferred": 0
+   },
+   "d": {
+    "question": "The organization is a very controlled and structured place. Formal procedures generally govern what people do.",
+    "now": 0,
+    "preferred": 0
+   }
+  },
+  {
+   "id": 2,
+   "title": "Organizational Leadership",
+   "a": {
+    "question": "The leadership in the organization is generally considered to exemplify mentoring, facilitating, or nurturing.",
+    "now": 0,
+    "preferred": 0
+   },
+   "b": {
+    "question": "The leadership in the organization is generally considered to exemplify\tentrepreneurship, innovating, or risk taking.",
+    "now": 0,
+    "preferred": 0
+   },
+   "c": {
+    "question": "The leadership in the organization is generally considered to exemplify a no-nonsense, aggressive, results-oriented focus.",
+    "now": 0,
+    "preferred": 0
+   },
+   "d": {
+    "question": "The leadership in the organization is generally considered to exemplify coordinating, organizing, or smooth-running efficiency.",
+    "now": 0,
+    "preferred": 0
+   }
+  },
+  {
+   "id": 3,
+   "title": "Management of Employees",
+   "a": {
+    "question": "The management style in the organization is characterized by teamwork, consensus, and participation.",
+    "now": 0,
+    "preferred": 0
+   },
+   "b": {
+    "question": "The management style in the organization is characterized by individual risk-taking, innovation, freedom, and uniqueness.",
+    "now": 0,
+    "preferred": 0
+   },
+   "c": {
+    "question": "The management style in the organization is characterized by hard-driving competitiveness, high demands, and achievement.",
+    "now": 0,
+    "preferred": 0
+   },
+   "d": {
+    "question": "The management style in the organization is characterized by security of employment, conformity, predictability, and stability in relationships.",
+    "now": 0,
+    "preferred": 0
+   }
+  },
+  {
+   "id": 4,
+   "title": "Organization Glue",
+   "a": {
+    "question": "The glue that holds the organization together is loyalty and mutual trust. Commitment to this organization runs high.",
+    "now": 0,
+    "preferred": 0
+   },
+   "b": {
+    "question": "The glue that holds the organization together is commitment to innovation and development. There is an emphasis on being on the cutting edge.",
+    "now": 0,
+    "preferred": 0
+   },
+   "c": {
+    "question": "The glue that holds the organization together is the emphasis on achievement and goal accomplishment. Aggressiveness and winning\tare common themes",
+    "now": 0,
+    "preferred": 0
+   },
+   "d": {
+    "question": "The glue that holds the organization together is formal rules and policies. Maintaining a smooth-running organization is important.",
+    "now": 0,
+    "preferred": 0
+   }
+  },
+  {
+   "id": 5,
+   "title": "Strategic Emphases",
+   "a": {
+    "question": "The organization emphasizes human development. High trust, openness, and participation persist.",
+    "now": 0,
+    "preferred": 0
+   },
+   "b": {
+    "question": "The organization emphasizes acquiring new resources and creating new\tchallenges. Trying new things and prospecting for opportunities are\tvalued.",
+    "now": 0,
+    "preferred": 0
+   },
+   "c": {
+    "question": "The organization emphasizes competitive actions and achievement.\tHitting stretch targets and winning in the marketplace are dominant.",
+    "now": 0,
+    "preferred": 0
+   },
+   "d": {
+    "question": "The organization emphasizes permanence and stability. Efficiency, control and smooth operations are important.",
+    "now": 0,
+    "preferred": 0
+   }
+  },
+  {
+   "id": 6,
+   "title": "Criteria of Success",
+   "a": {
+    "question": "The organization defines success on the basis of the development of human resources, teamwork, employee commitment, and concern for people.",
+    "now": 0,
+    "preferred": 0
+   },
+   "b": {
+    "question": "The organization defines success on the basis of having the most unique or newest products. It is a product leader and innovator.",
+    "now": 0,
+    "preferred": 0
+   },
+   "c": {
+    "question": "The organization defines success on the basis of winning in the marketplace and outpacing the competition. Competitive market leadership is key.",
+    "now": 0,
+    "preferred": 0
+   },
+   "d": {
+    "question": "The organization defines success on the basis of efficiency.\tDependable delivery, smooth scheduling and low-cost production are critical.",
+    "now": 0,
+    "preferred": 0
+   }
+  }
+ ]
+}

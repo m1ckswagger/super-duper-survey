@@ -1,0 +1,244 @@
+{
+ "questions": [
+  {
+   "id": 1,
+   "question": "In our company people are flexible and adaptable when changes are necessary. ",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 2,
+   "question": "In our company individuals and teams have clearly defined goals that relate to the goals and mission of the business.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 3,
+   "question": "In our company teams often lack the authority needed to get the job done effectively",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 4,
+   "question": "In our company we give the highest priority and support to meeting the needs of clients and customers and to solving their problems.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 5,
+   "question": "In our company people value and make use of one another's unique strengths and different abilities.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 6,
+   "question": "In our company people feel that most change is the result of pressures imposed from higher up in the organization.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 7,
+   "question": "In our company people and teams are often expected to reach goals which they believe are unattainable",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 8,
+   "question": "In our company people believe in teamwork, the \"what's in it for us\" approach rather than \"what's in it for me.\"",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 9,
+   "question": "In our company our policies and procedures help us to provide the service our customers want and need.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 10,
+   "question": "In our company everyone knows and understands our business objectives and priorities.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 11,
+   "question": "In our company people have a clear idea of why and how to proceed throughout the process of change.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 12,
+   "question": "In our company individuals and teams are measured and rewarded according to how well goals are achieved.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 13,
+   "question": "In our company people lack the interpersonal and technical skills they need to work effectively in teams.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 14,
+   "question": "In our company people often see customer and client problems as someone else's responsibility.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 15,
+   "question": "In our company people sometimes compromise company policies or principles to reach operational goals",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 16,
+   "question": "In our company people believe that change happens too quickly and causes too much disruption.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 17,
+   "question": "In our company individuals and teams participate in defining specific goals.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 18,
+   "question": "In our company people know what's expected of them and understand their impact on other people, teams and functions.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 19,
+   "question": "In our company people are always looking for new ways to better serve clients and customers.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 20,
+   "question": "In our company business decisions are most often made on the basis of facts, not just perceptions or assumptions.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 21,
+   "question": "In our company people believe they can influence and affect their work place through their ideas and involvement.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 22,
+   "question": "In our company we constantly stretch our goals, to continuously improve.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 23,
+   "question": "In our company people believe in working together collaboratively, preferring cooperation over competition.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 24,
+   "question": "In our company employees who do the best job of serving customers are more likely than other employees to be recognized or rewarded.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 25,
+   "question": "In our company people have access to timely and accurate information about what's really happening in the organization and why.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 26,
+   "question": "In our company people believe that their concerns and anxieties during periods of change are heard and taken into consideration.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 27,
+   "question": "In our company individuals, teams, and functional areas often have incompatible goals.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 28,
+   "question": "In our company managers at all levels work together as a team to achieve results for the organization.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 29,
+   "question": "In our company when customers have problems with the products or service they receive, those problems are almost always resolved to their satisfaction.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": 30,
+   "question": "In our company everyone strongly believes in a set of shared values about how people should work together to solve common problems and reach mutual objectives.",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  }
+ ]
+}
