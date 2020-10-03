@@ -2,7 +2,6 @@ package main
 
 import (
 	"net/http"
-	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -23,7 +22,7 @@ func main() {
 	})
 	ocai = generateOCAICatalog()
 	ocai.WriteJSON("data/ocai.json")
-	os.Exit(1)
+	// os.Exit(1)
 	router = gin.Default()
 	router.LoadHTMLGlob("templates/*")
 	initializeRoutes()

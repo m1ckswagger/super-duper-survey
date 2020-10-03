@@ -21,4 +21,8 @@ func initializeRoutes() {
 		articleRoutes.GET("/create", ensureLoggedIn(), showArticleCreationPage)
 		articleRoutes.POST("/create", ensureLoggedIn(), createArticle)
 	}
+	catalogRoutes := router.Group("/catalog")
+	{
+		catalogRoutes.GET("/", showCatalogs)
+	}
 }
