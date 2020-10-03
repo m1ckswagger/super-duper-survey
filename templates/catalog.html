@@ -1,0 +1,36 @@
+<!--catalog.html-->
+
+<!--Embed the header.html template at this location-->
+{{ template "header.html" .}}
+<h1>{{.title}}</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Question</th>
+                <th scope="col">Answers</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{range .payload.Questions }}
+           <tr>
+               {{$id := .ID}}
+               <th scope="row">{{.ID}}</th>
+               <td class="align-middle">{{.Question}}</td>
+               <td>
+                <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                    {{range .Options}}
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="options{{$id}}" id="option2" autocomplete="off">{{.}}
+                    </label>
+                    {{end}}
+                </div>
+               </td>
+           </tr> 
+        {{end}}
+        </tbody>
+    </table>
+    <p class="text-center">{{.ID}} {{.Question}}</p>
+
+<!--Embed the footer.html template at this location-->
+{{ template "footer.html" .}}
