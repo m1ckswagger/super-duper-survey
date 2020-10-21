@@ -16,7 +16,7 @@
   -->
     <div class="jumbotron">
       <h3 class="display-5">{{.Name}}</h1>
-      <p class="lead">Description</p>
+      <p class="lead">{{.Description}}</p>
       <p class="lead">
         {{if eq .ID 0}}
           {{if $ocaq}}
@@ -38,7 +38,7 @@
   {{end}}
     <div class="jumbotron">
       <h3 class="display-5">{{.ocai.Name}}</h1>
-      <p class="lead">Description</p>
+      <p class="lead">{{.ocai.Description}}</p>
       <p class="lead">
         {{if .ocaiComplete}}
             <a class="btn btn-success btn-lg disabled" href="/ocai" role="button">Completed!</a>

@@ -10,8 +10,9 @@ import (
 )
 
 type Catalog struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID          int    `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
 }
 
 type RegularCatalog struct {
@@ -42,6 +43,31 @@ type OCAIQuestion struct {
 	Question  string `json:"question"`
 	Now       int    `json:"now"`
 	Preferred int    `json:"preferred"`
+}
+
+func initCatalogs() {
+	ocaq := NewRegularCatalog("Organizational Culture Assessment Questionaire", "data/ocaq.txt", "data/ocaq.json", []string{"Yes", "No"})
+	ocaq.Description = `The Organizational Culture Assessment Questionnaire (OCAQ) is based on the work of Dr. Talcott
+	Parsons, a sociologist at Harvard. Parsons developed a framework and theory of action in social
+	systems. He argued that all organizations must carry out four crucial functions if they are to survive for
+	any substantial length of time. We have labeled these four functions managing change, achieving
+	goals, coordinating teamwork, and building a strong culture. One aspect of the way in which
+	organizations achieve their goals is especially important, yet often neglected. This factor has been
+	made into a separate, fifth scale: customer orientation.`
+	catalogs = append(catalogs, ocaq)
+	sheff := NewRegularCatalog("Sheffield Culture Survey", "data/sheffield.txt", "data/sheffield.json", []string{
+		"Strongly disagree",
+		"Disagree",
+		"Neutral",
+		"Agree",
+		"Strongly Agree",
+	})
+	sheff.Description = `The questions related to the key elements of a generative culture as follows:
+	1) Shared sense of purpose
+	2) Structured systems and resources to achieve the purpose
+	3) Mindfulness
+	4) Processes and mindset for learning and continuous improvement`
+	catalogs = append(catalogs, sheff)
 }
 
 func getAllCatalogs() []*RegularCatalog {
@@ -96,6 +122,12 @@ func (c *OCAICatalog) WriteJSON(filepath string) {
 func generateOCAICatalog() *OCAICatalog {
 	cata := new(OCAICatalog)
 	cata.Name = "Organizational Culture Assessment Instrument"
+	cata.Description = `The purpose of the OCAI is to assess six key dimensions of organizational culture. In completing the
+	instrument, you will be providing a picture of how your organization operates and the values that
+	characterize it. No right or wrong answers exist for these questions, just as there is no right or wrong
+	culture. Every organization will most likely produce a different set of responses. Therefore, be as
+	accurate as you can in responding to the questions so that your resulting cultural diagnosis will be as
+	precise as possible. `
 	cata.Categories = append(cata.Categories, OCAICategory{
 		ID:    1,
 		Title: "Dominant Characteristics",

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/sha1"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -68,6 +69,11 @@ func submitCatalog(c *gin.Context) {
 				"VALUES (%d, '%s', %d, '%s');"
 			session := sessions.Default(c)
 			id := session.Get("ID")
+			completed := session.Get(fmt.Sprintf("catalog%d", catalogID))
+			if completed != nil && completed.(bool) {
+				c.AbortWithStatus(http.StatusForbidden)
+				return
+			}
 			if id == nil {
 				c.AbortWithStatus(http.StatusForbidden)
 				return
@@ -104,12 +110,23 @@ func submitOCAICatalog(c *gin.Context) {
 	answers := make([]*OCAICategory, 6)
 	session := sessions.Default(c)
 	id := session.Get("ID")
+	completed := session.Get("ocai")
+	if completed != nil && completed.(bool) {
+		c.AbortWithStatus(http.StatusForbidden)
+		return
+	}
 	if id == nil {
 		c.AbortWithStatus(http.StatusForbidden)
 		return
 	}
 	c.Request.ParseForm()
+	var department string
 	for k, v := range c.Request.PostForm {
+		if k == "department" {
+			department = v[0]
+			fmt.Println(department)
+			continue
+		}
 		index, _ := strconv.Atoi(string(k[0]))
 		index--
 		a := answers[index]
@@ -136,10 +153,13 @@ func submitOCAICatalog(c *gin.Context) {
 		}
 		answers[index] = a
 	}
-	queryPrep := "INSERT INTO `ocai` (`session_id`, `num`, `a_now`, `a_preferred`, `b_now`, `b_preferred`, `c_now`, `c_preferred`, `d_now`, `d_preferred`) " +
-		"VALUES ('%s', %d, %d, %d, %d, %d, %d, %d, %d, %d);"
+	queryPrep := "INSERT INTO `ocai` (`session_id`, `department`, `num`, `a_now`, `a_preferred`, `b_now`, `b_preferred`, `c_now`, `c_preferred`, `d_now`, `d_preferred`) " +
+		"VALUES ('%x', '%s', %d, %d, %d, %d, %d, %d, %d, %d, %d);"
+	h := sha1.New()
+	h.Write([]byte(id.(string)))
+	sessionIDHash := h.Sum(nil)
 	for _, a := range answers {
-		query := fmt.Sprintf(queryPrep, id, a.ID, a.A.Now, a.A.Preferred, a.B.Now, a.B.Preferred, a.C.Now, a.C.Preferred, a.D.Now, a.D.Preferred)
+		query := fmt.Sprintf(queryPrep, sessionIDHash, department, a.ID, a.A.Now, a.A.Preferred, a.B.Now, a.B.Preferred, a.C.Now, a.C.Preferred, a.D.Now, a.D.Preferred)
 		_, err := db.Exec(query)
 		if err != nil {
 			fmt.Println(err)

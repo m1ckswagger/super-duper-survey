@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"database/sql"
@@ -18,22 +19,24 @@ var db *sql.DB
 
 func main() {
 	var err error
-	db, err = sql.Open("mysql", "root:password@tcp(127.0.0.1:3306)/surveys")
-	print(db, err)
+	fmt.Println(err)
+	db, err = sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/surveys")
+	if err != nil {
+		panic(err)
+	}
 	initCatalogs()
 	ocai = generateOCAICatalog()
 	ocai.WriteJSON("data/ocai.json")
+	gin.SetMode(gin.ReleaseMode)
 	router = gin.Default()
 	store := cookie.NewStore([]byte("secret"))
 	router.Use(sessions.Sessions("SESSIONID", store))
 	router.LoadHTMLGlob("templates/*")
 	initializeRoutes()
-	router.Run(":443")
+	router.RunTLS(":443", "cert/fullchain.pem", "cert/privkey.pem")
 }
 
 func render(c *gin.Context, data gin.H, templateName string) {
-	loggedInInterface, _ := c.Get("is_logged_in")
-	data["is_logged_in"] = loggedInInterface.(bool)
 	data["catalogs"] = getAllCatalogs()
 	data["ocai"] = ocai
 
@@ -45,17 +48,4 @@ func render(c *gin.Context, data gin.H, templateName string) {
 	default:
 		c.HTML(http.StatusOK, templateName, data)
 	}
-}
-
-func initCatalogs() {
-	ocaq := NewRegularCatalog("Organizational Culture Assessment Questionaire", "data/ocaq.txt", "data/ocaq.json", []string{"Yes", "No"})
-	catalogs = append(catalogs, ocaq)
-	sheff := NewRegularCatalog("Sheffield Culture Survey", "data/sheffield.txt", "data/sheffield.json", []string{
-		"Strongly disagree",
-		"Disagree",
-		"Neutral",
-		"Agree",
-		"Strongly Agree",
-	})
-	catalogs = append(catalogs, sheff)
 }

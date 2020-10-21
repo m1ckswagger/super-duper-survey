@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS answers (
 CREATE TABLE IF NOT EXISTS ocai (
   id int NOT NULL AUTO_INCREMENT,
   session_id varchar(255) NOT NULL,
+  department varchar(255) NOT NULL,
   num int NOT NULL,
   a_now int NOT NULL,
   b_now int NOT NULL,

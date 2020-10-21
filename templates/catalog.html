@@ -3,6 +3,11 @@
 <!--Embed the header.html template at this location-->
 {{ template "header.html" .}}
 <h1>{{.title}}</h1>
+<p class="text-justify">
+    <br>
+    {{.payload.Description}}
+</p>
+<br>
 <form name="catalogForm" method="POST" action="/catalog/submit/{{.payload.ID}}" onsubmit="return validateForm()">
     <table class="table table-hover">
         <thead>
@@ -31,7 +36,7 @@
         {{end}}
         </tbody>
     </table>
-    <input type="submit" value="Submit">
+    <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <p class="text-center">{{.ID}} {{.Question}}</p>
 
