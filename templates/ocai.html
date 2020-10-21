@@ -1,0 +1,81 @@
+<!--catalog.html-->
+
+<!--Embed the header.html template at this location-->
+{{ template "header.html" .}}
+<h1>{{.title}}</h1><br>
+<h3>Instructions</h3>
+<p class="text-justify">
+    <br>
+The OCAI consists of six questions. Each question has four alternatives. Divide 100 points among these four alternatives depending on the extent to which each alternative is similar to your own organization. Give a higher number of points to the alternative that is most similar to your organization. For example, in question one, if you think alternative A is very similar to your organization, alternative B and C are somewhat similar, and alternative D is hardly similar at all, you might give 55 points to A, 20 points to B and C, and five points to D. Just be sure your total equals
+100 points for each question.<br><br>
+Note, that the first pass through the six questions is labeled “Now”. This refers to the culture, as it
+exists today. After you complete the “Now”, you will find the questions repeated under a heading of
+“Preferred”. Your answers to these questions should be based on how you would like the
+organization to look five years from now.
+</p>
+<h4><b>Please take care that "Now" and "Preferred" columns add up to 100. I ran out of time to implement the form validation.</b></h4>
+<br>
+    <form method="POST" action="/ocai/submit">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Category</th>
+                <th scope="col">Now</th>
+                <th scope="col">Preferred</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{range .payload.Categories }}
+            <tr class="table-primary">
+                <th scope="row">{{.ID}}</th>
+                <td class="align-middle">{{.Title}}</td>
+                <td></td><td></td>
+            </tr>
+            <tr>
+                <th scope="row">A</th>
+                <td class="align-middle">{{.A.Question}}</td>
+                <td>
+                    <input type="number" name="{{.ID}}an" id="{{.ID}}an" class="form-control" placeholder="0">
+                </td>
+                <td>
+                    <input type="number" min="0" max="100" name="{{.ID}}ap" id="{{.ID}}ap" class="form-control" placeholder="0">
+                </td>
+            </tr>
+            <tr>
+               <th scope="row">B</th>
+               <td class="align-middle">{{.B.Question}}</td>
+               <td>
+                    <input type="number" min="0" max="100" name="{{.ID}}bn" id="{{.ID}}bn" class="form-control" placeholder="0">
+               </td>
+               <td>
+                    <input type="number" min="0" max="100" name="{{.ID}}bp" id="{{.ID}}bp" class="form-control" placeholder="0">
+               </td>
+           </tr>
+           <tr>
+               <th scope="row">C</th>
+               <td class="align-middle">{{.C.Question}}</td>
+               <td>
+                    <input type="number" min="0" max="100" name="{{.ID}}cn" id="{{.ID}}cn" class="form-control" placeholder="0">
+               </td>
+               <td>
+                    <input type="number" min="0" max="100" name="{{.ID}}cp" id="{{.ID}}cp" class="form-control" placeholder="0">
+               </td>
+           </tr>
+           <tr>
+               <th scope="row">D</th>
+               <td class="align-middle">{{.D.Question}}</td>
+               <td>
+                    <input type="number" min="0" max="100" name="{{.ID}}dn" id="{{.ID}}dn" class="form-control" placeholder="0">
+               </td>
+               <td>
+                    <input type="number" min="0" max="100" name="{{.ID}}dp" id="{{.ID}}dp" class="form-control" placeholder="0">
+               </td>
+           </tr>
+        {{end}}
+        </tbody>
+    </table>
+    <input type="submit" value="Submit">
+    </form>
+<!--Embed the footer.html template at this location-->
+{{ template "footer.html" .}}

@@ -2,16 +2,51 @@
 
 <!--Embed the header.html template at this location-->
 {{ template "header.html" .}}
-
+  {{ $ocaq := .ocaq}}
+  {{ $sheff := .sheff}}
   {{range .payload }}
-    <!--Create the link for the article based on its ID-->
-    <a href="/article/view/{{.ID}}">
-      <!--Display the title of the article -->
-      <h2>{{.Title}}</h2>
-    </a>
+    <!-- <div class="col-8">
+      <a class="btn btn-outline-primary active" href="/catalog/view/{{.ID}}">
+        <h4>{{.Name}}</h4>
+      </a>
+    </div>
+    <div class="col-4">
+      Description
+    </div>
+  -->
+    <div class="jumbotron">
+      <h3 class="display-5">{{.Name}}</h1>
+      <p class="lead">Description</p>
+      <p class="lead">
+        {{if eq .ID 0}}
+          {{if $ocaq}}
+            <a class="btn btn-success btn-lg disabled" href="/catalog/view/{{.ID}}" role="button">Completed!</a>
+          {{else}}
+            <a class="btn btn-primary btn-lg" href="/catalog/view/{{.ID}}" role="button">Take survey</a>
+          {{end}}
+        {{end}}
+        {{if eq .ID 1}}
+          {{if $sheff}}
+            <a class="btn btn-success btn-lg disabled" href="/catalog/view/{{.ID}}" role="button">Completed!</a>
+          {{else}}
+            <a class="btn btn-primary btn-lg" href="/catalog/view/{{.ID}}" role="button">Take survey</a>
+          {{end}}
+        {{end}}
+      </p>
+    </div>
     <!--Display the content of the article-->
-    <p>{{.Content}}</p>
   {{end}}
+    <div class="jumbotron">
+      <h3 class="display-5">{{.ocai.Name}}</h1>
+      <p class="lead">Description</p>
+      <p class="lead">
+        {{if .ocaiComplete}}
+            <a class="btn btn-success btn-lg disabled" href="/ocai" role="button">Completed!</a>
+        {{else}}
+            <a class="btn btn-primary btn-lg" href="/ocai" role="button">Take survey</a>
+        {{end}}
+      </p>
+    </div>
 
 <!--Embed the footer.html template at this location-->
 {{ template "footer.html" .}}
