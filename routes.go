@@ -23,6 +23,12 @@ func initializeRoutes() {
 	}
 	catalogRoutes := router.Group("/catalog")
 	{
-		catalogRoutes.GET("/", showCatalogs)
+		catalogRoutes.GET("/view/:catalog_id", getCatalog)
+		catalogRoutes.POST("/submit/:catalog_id", submitCatalog)
+	}
+	ocaiRoutes := router.Group("/ocai")
+	{
+		ocaiRoutes.GET("/", showOCAICatalog)
+		ocaiRoutes.POST("/submit", submitOCAICatalog)
 	}
 }
