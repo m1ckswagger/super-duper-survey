@@ -1,0 +1,135 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/timestamp.proto";
+import "question.proto";
+
+option go_package = "sipwise.com/shardik/pkg/api/v1";
+
+// Catalogs we manage
+message Catalog {
+    // Unique integer identifier of the catalog
+    int64 id = 1;
+
+    // Title of the catalog
+    string title = 2;
+
+    // Description of the catalog
+    string description = 3;
+
+    // Date and time when catalog was created
+    google.protobuf.Timestamp created = 4;
+
+    // Date and time when catalog was updated
+    google.protobuf.Timestamp updated = 5;
+
+    repeated Question questions = 6;
+}
+
+// Request data to create a new catalog
+message CreateRequest {
+    // API versioning
+    string api = 1;
+
+    // Catalog entity to add
+    Catalog catalog = 2;
+}
+
+// Contains data of created catalog
+message CreateResponse {
+    // API versioning
+    string api = 1;
+
+    // ID of created catalog
+    int64 id = 2;
+}
+
+// Request data to read catalog
+message ReadRequest {
+    // API versioning
+    string api = 1;
+
+    // Unique integer identifer of the catalog
+    int64 id = 2;
+}
+
+// Contains catalog data specified by ID request
+message ReadResponse{
+    // API versioning
+    string api = 1;
+
+    // Catalog read by ID
+    Catalog catalog = 2;
+}
+
+
+// Request data to update catalog
+message UpdateRequest {
+    // API versioning
+    string api = 1;
+
+    // Catalog entity to update
+    Catalog catalog = 2;
+}
+
+// Contains status of update operation
+message UpdateResponse {
+    // API versioning
+    string api = 1;
+
+    // Number of updated entities
+    int64 updated = 2;
+}
+
+// Request data to delete catalog
+message DeleteRequest {
+    // API versioning
+    string api = 1;
+
+    // Unique integer identifier of catalog to delete
+    int64 id = 2;
+}
+
+// Contains status of delete operation
+message DeleteResponse {
+    // API versioning
+    string api = 1;
+
+    // Contains number of entities that have been deleted
+    // Equals 1 in case of successful delete
+    int64 deleted = 2;
+}
+
+// Request data to read all catalogs
+message ReadAllRequest {
+    // API versioning
+    string api = 1;
+}
+
+// Contains list of all catalogs
+message ReadAllResponse {
+    // API versioning
+    string api = 1;
+
+    // List of all todo tasks
+    repeated Catalog catalogs = 2;
+}
+
+// Service to manage list of catalogs
+service CatalogService {
+    // Create a new catalog
+    rpc Create(CreateRequest) returns (CreateResponse);
+
+    // Read a catalog
+    rpc Read(ReadRequest) returns (ReadResponse);
+
+    // Update catalog
+    rpc Update(UpdateRequest) returns (UpdateResponse);
+
+    // Delete catalog
+    rpc Delete(DeleteRequest) returns (DeleteResponse);
+
+    // Read all catalogs
+    rpc ReadAll(ReadAllRequest) returns (ReadAllResponse);
+}
