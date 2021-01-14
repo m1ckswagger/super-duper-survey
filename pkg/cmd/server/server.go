@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"sipwise.com/shardik/pkg/protocol/rest"
 	"context"
 	"database/sql"
 	"flag"
@@ -28,6 +29,7 @@ func RunServer() error {
 
 	var cfg Config
 	flag.StringVar(&cfg.GRPCPort, "grpc-port", "", "gRPC port to bind")
+	flag.StringVar(&cfg.HTTPPort, "http-port", "", "http port to bind")
 	flag.StringVar(&cfg.DatastoreDBHost, "db-host", "", "Database host")
 	flag.StringVar(&cfg.DatastoreDBUser, "db-user", "", "Database user")
 	flag.StringVar(&cfg.DatastoreDBPassword, "db-password", "", "Database password")
@@ -36,6 +38,10 @@ func RunServer() error {
 
 	if len(cfg.GRPCPort) == 0 {
 		return fmt.Errorf("invalid TCP port for gRPC server: '%s'", cfg.GRPCPort)
+	}
+
+	if len(cfg.HTTPPort) == 0 {
+		return fmt.Errorf("invalid TCP port for HTTP server: '%s'", cfg.HTTPPort)
 	}
 
 	param := "parseTime=true"
@@ -53,6 +59,10 @@ func RunServer() error {
 	defer db.Close()
 
 	v1API := v1.NewCatalogServiceServer(db)
+
+	go func() {
+		_ = rest.RunServer(ctx, cfg.GRPCPort, cfg.HTTPPort)
+	}
 
 	return grpc.RunServer(ctx, v1API, cfg.GRPCPort)
 }

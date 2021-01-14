@@ -1,0 +1,221 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Catalog service",
+    "version": "1.0"
+  },
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/catalog/all": {
+      "get": {
+        "summary": "Read all catalogs",
+        "operationId": "CatalogService_ReadAll",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ReadAllResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "api",
+            "description": "API versioning.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "CatalogService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1Catalog": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "Unique integer identifier of the catalog"
+        },
+        "title": {
+          "type": "string",
+          "title": "Title of the catalog"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description of the catalog"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Date and time when catalog was created"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Date and time when catalog was updated"
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Question"
+          }
+        }
+      },
+      "title": "Catalogs we manage"
+    },
+    "v1CreateResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "ID of created catalog"
+        }
+      },
+      "title": "Contains data of created catalog"
+    },
+    "v1DeleteResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "deleted": {
+          "type": "string",
+          "format": "int64",
+          "title": "Contains number of entities that have been deleted\nEquals 1 in case of successful delete"
+        }
+      },
+      "title": "Contains status of delete operation"
+    },
+    "v1Question": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "question": {
+          "type": "string"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "v1ReadAllResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "catalogs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Catalog"
+          },
+          "title": "List of all todo tasks"
+        }
+      },
+      "title": "Contains list of all catalogs"
+    },
+    "v1ReadResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "catalog": {
+          "$ref": "#/definitions/v1Catalog",
+          "title": "Catalog read by ID"
+        }
+      },
+      "title": "Contains catalog data specified by ID request"
+    },
+    "v1UpdateResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "updated": {
+          "type": "string",
+          "format": "int64",
+          "title": "Number of updated entities"
+        }
+      },
+      "title": "Contains status of update operation"
+    }
+  }
+}
