@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"gitub.com/m1ckswagger/super-duper-survey/pkg/protocol/rest"
+	"github.com/m1ckswagger/super-duper-survey/pkg/protocol/rest"
 	"context"
 	"database/sql"
 	"flag"
@@ -10,8 +10,8 @@ import (
 	// mysql driver
 	_ "github.com/go-sql-driver/mysql"
 
-	"gitub.com/m1ckswagger/super-duper-survey/pkg/protocol/grpc"
-	v1 "gitub.com/m1ckswagger/super-duper-survey/pkg/service/v1"
+	"github.com/m1ckswagger/super-duper-survey/pkg/protocol/grpc"
+	v1 "github.com/m1ckswagger/super-duper-survey/pkg/service/v1"
 )
 
 type Config struct {

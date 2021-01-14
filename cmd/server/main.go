@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	cmd "gitub.com/m1ckswagger/super-duper-survey/pkg/cmd"
+	cmd "github.com/m1ckswagger/super-duper-survey/pkg/cmd"
 )
 
 func main() {
