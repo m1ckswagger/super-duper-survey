@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"sipwise.com/shardik/pkg/protocol/rest"
+	"gitub.com/m1ckswagger/super-duper-survey/pkg/protocol/rest"
 	"context"
 	"database/sql"
 	"flag"
@@ -10,8 +10,8 @@ import (
 	// mysql driver
 	_ "github.com/go-sql-driver/mysql"
 
-	"sipwise.com/shardik/pkg/protocol/grpc"
-	v1 "sipwise.com/shardik/pkg/service/v1"
+	"gitub.com/m1ckswagger/super-duper-survey/pkg/protocol/grpc"
+	v1 "gitub.com/m1ckswagger/super-duper-survey/pkg/service/v1"
 )
 
 type Config struct {

@@ -8,9 +8,9 @@ import (
 
 	"github.com/golang/protobuf/ptypes"
 
+	v1 "gitub.com/m1ckswagger/super-duper-survey/pkg/api/v1"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	v1 "sipwise.com/shardik/pkg/api/v1"
 )
 
 const (

@@ -1,4 +1,4 @@
-module sipwise.com/shardik
+module github.com/m1ckswagger/super-duper-survey
 
 go 1.15
 

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package v1;
 
-option go_package = "sipwise.com/shardik/pkg/api/v1";
+option go_package = "github.com/m1ckswagger/super-duper-survey/pkg/api/v1";
 
 message Question {
     int64 id = 1;

@@ -7,7 +7,7 @@ import (
 	"os"
 	"os/signal"
 
-	v1 "sipwise.com/shardik/pkg/api/v1"
+	v1 "github.com/m1ckswagger/super-duper-survey/pkg/api/v1"
 )
 
 func RunServer(ctx context.Context, v1API v1.CatalogServiceServer, port string) error {

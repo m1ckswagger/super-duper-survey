@@ -10,8 +10,8 @@ import (
 
 	"github.com/golang/protobuf/protoc-gen-go/grpc"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	v1 "github.com/m1ckswagger/super-duper-survey/pkg/api/v1"
 	"google.golang.org/grpc"
-	v1 "sipwise.com/shardik/pkg/api/v1"
 )
 
 func RunServer(ctx context.Context, grpcPort, httpPort string) error {
