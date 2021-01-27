@@ -8,7 +8,6 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/golang/protobuf/protoc-gen-go/grpc"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	v1 "github.com/m1ckswagger/super-duper-survey/pkg/api/v1"
 	"google.golang.org/grpc"
@@ -20,8 +19,17 @@ func RunServer(ctx context.Context, grpcPort, httpPort string) error {
 
 	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
+	// Register Catalog REST Service
 	if err := v1.RegisterCatalogServiceHandlerFromEndpoint(ctx, mux, "localhost:"+grpcPort, opts); err != nil {
-		log.Fatal("failed to start HTTP gateway: %v", err)
+		log.Fatalf("failed to start HTTP gateway: %v", err)
+	}
+	// Register User REST service
+	if err := v1.RegisterUserServiceHandlerFromEndpoint(ctx, mux, "localhost:"+grpcPort, opts); err != nil {
+		log.Fatalf("failed to start HTTP gateway: %v", err)
+	}
+	// Register Answer REST service
+	if err := v1.RegisterAnswerServiceHandlerFromEndpoint(ctx, mux, "localhost:"+grpcPort, opts); err != nil {
+		log.Fatalf("failed to start HTTP gateway: %v", err)
 	}
 
 	srv := &http.Server{

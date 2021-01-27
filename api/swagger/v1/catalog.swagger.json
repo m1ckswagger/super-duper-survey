@@ -14,7 +14,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/catalog/all": {
+    "/v1/catalog": {
       "get": {
         "summary": "Read all catalogs",
         "operationId": "CatalogService_ReadAll",
@@ -40,6 +40,230 @@
           }
         },
         "parameters": [
+          {
+            "name": "api",
+            "description": "API versioning.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "CatalogService"
+        ]
+      },
+      "post": {
+        "summary": "Create a new catalog",
+        "operationId": "CatalogService_Create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CatalogService"
+        ]
+      }
+    },
+    "/v1/catalog/{catalog.id}": {
+      "put": {
+        "summary": "Update catalog",
+        "operationId": "CatalogService_Update",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "catalog.id",
+            "description": "Unique integer identifier of the catalog",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CatalogService"
+        ]
+      },
+      "patch": {
+        "summary": "Update catalog",
+        "operationId": "CatalogService_Update2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "catalog.id",
+            "description": "Unique integer identifier of the catalog",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CatalogService"
+        ]
+      }
+    },
+    "/v1/catalog/{id}": {
+      "get": {
+        "summary": "Read a catalog",
+        "operationId": "CatalogService_Read",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ReadResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique integer identifer of the catalog",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "api",
+            "description": "API versioning.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "CatalogService"
+        ]
+      },
+      "delete": {
+        "summary": "Delete catalog",
+        "operationId": "CatalogService_Delete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeleteResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique integer identifier of catalog to delete",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
           {
             "name": "api",
             "description": "API versioning.",
@@ -123,6 +347,20 @@
       },
       "title": "Catalogs we manage"
     },
+    "v1CreateRequest": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "catalog": {
+          "$ref": "#/definitions/v1Catalog",
+          "title": "Catalog entity to add"
+        }
+      },
+      "title": "Request data to create a new catalog"
+    },
     "v1CreateResponse": {
       "type": "object",
       "properties": {
@@ -158,18 +396,22 @@
       "properties": {
         "id": {
           "type": "string",
-          "format": "int64"
+          "format": "int64",
+          "title": "Unique integer identifier of the question"
         },
         "question": {
-          "type": "string"
+          "type": "string",
+          "title": "Text of the question"
         },
         "options": {
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "title": "Possible options to choose from"
         }
-      }
+      },
+      "title": "Question in catalog"
     },
     "v1ReadAllResponse": {
       "type": "object",
@@ -201,6 +443,20 @@
         }
       },
       "title": "Contains catalog data specified by ID request"
+    },
+    "v1UpdateRequest": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "catalog": {
+          "$ref": "#/definitions/v1Catalog",
+          "title": "Catalog entity to update"
+        }
+      },
+      "title": "Request data to update catalog"
     },
     "v1UpdateResponse": {
       "type": "object",

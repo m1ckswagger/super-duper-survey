@@ -1,0 +1,188 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "github.com/m1ckswagger/super-duper-survey/pkg/api/v1";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+	info: {
+		title: "User service";
+		version: "1.0";
+    };
+    schemes: HTTP;
+    consumes: "application/json";
+    produces: "application/json";
+    responses: {
+		key: "404";
+		value: {
+			description: "Returned when the resource does not exist.";
+			schema: {
+				json_schema: {
+					type: STRING;
+				}
+			}
+		}
+	}
+};
+
+// User object
+message User {
+    // Unique id of user
+    int64 id = 1;
+
+    // Unique email identifiying one user
+    string email = 2;
+
+    // First name of the user
+    string firstname = 3;
+
+    // Last name of the user
+    string lastname = 4;
+
+    // User password used for login
+    string password = 5;
+
+    // Determines whether user is admin
+    bool is_admin = 6;
+
+    // Determines whether user is superuser
+    bool is_superuser = 7;
+}
+
+// Request data to authenticate as user
+message UserLoginRequest {
+    // API versioning
+    string api = 1;
+
+    // User name to authenticate
+    string username = 2;
+
+
+    // Password for authentication
+    string password = 3;
+}
+
+// Contains data of user login
+message UserLoginResponse {
+    // API versioning
+    string api = 1;
+
+    // Login token
+    string token = 2;
+}
+
+// Request data to read catalog
+message UserRegisterRequest {
+    // API versioning
+    string api = 1;
+
+    // User to register
+    User user = 2;
+}
+
+// Contains catalog data specified by ID request
+message UserRegisterResponse{
+    // API versioning
+    string api = 1;
+
+    // User ID of created user
+    int64 id = 2;
+}
+
+// Request data to update user
+message UserUpdateRequest {
+    // API versioning
+    string api = 1;
+
+    // User entity to update
+    User user = 2;
+}
+
+// Contains status of update operation
+message UserUpdateResponse {
+    // API versioning
+    string api = 1;
+
+    // Number of updated entities
+    int64 updated = 2;
+}
+// Request data to read user
+message UserViewRequest {
+    // API versioning
+    string api = 1;
+
+    // Unique email string identifying user
+    int64 id = 2;
+}
+
+// Contains user data specified by ID request
+message UserViewResponse{
+    // API versioning
+    string api = 1;
+
+    // User read by ID
+    User user = 2;
+}
+
+// Request data to read all users
+message UserViewAllRequest {
+    // API versioning
+    string api = 1;
+}
+
+// Contains list of all users
+message UserViewAllResponse {
+    // API versioning
+    string api = 1;
+
+    // List of users
+    repeated User users = 2;
+}
+
+// Service to manage users
+service UserService {
+    rpc Login(UserLoginRequest) returns (UserLoginResponse) {
+        option (google.api.http) = {
+            post: "/v1/user/login"
+            body: "*"
+        };
+    }
+
+    // Register a new user
+    rpc Register(UserRegisterRequest) returns (UserRegisterResponse) {
+        option (google.api.http) = {
+            post: "/v1/user/register"
+            body: "*"
+        };
+    }
+
+    // View a user
+    rpc View(UserViewRequest) returns (UserViewResponse) {
+        option (google.api.http) = {
+            get: "/v1/user/{id}"
+        };
+    }
+
+    // Update user
+    rpc Update(UserUpdateRequest) returns (UserUpdateResponse) {
+        option (google.api.http) = {
+            put: "/v1/user/{user.id}"
+            body: "*"
+
+            additional_bindings {
+                patch: "/v1/user/{user.id}"
+                body: "*"
+            }
+        };
+    }
+
+    // View all users
+    rpc ViewAll(UserViewAllRequest) returns (UserViewAllResponse) {
+        option (google.api.http) = {
+            get: "/v1/user"
+        };
+    };
+}

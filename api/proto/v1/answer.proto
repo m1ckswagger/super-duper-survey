@@ -1,0 +1,112 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "github.com/m1ckswagger/super-duper-survey/pkg/api/v1";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+	info: {
+		title: "Answer service";
+		version: "1.0";
+    };
+    schemes: HTTP;
+    consumes: "application/json";
+    produces: "application/json";
+    responses: {
+		key: "404";
+		value: {
+			description: "Returned when the resource does not exist.";
+			schema: {
+				json_schema: {
+					type: STRING;
+				}
+			}
+		}
+	}
+};
+
+message Answer {
+    int64 id = 1;
+    int64 catalog_id = 2;
+    int64 question_id = 3;
+    int64 option_id = 4;
+    string session_id = 5;
+}
+
+// Request data to create a new answer
+message AnswerCreateRequest {
+    // API versioning
+    string api = 1;
+
+    // Catalog entity to add
+    Answer answer = 2;
+}
+
+// Contains data of created catalog
+message AnswerCreateResponse {
+    // API versioning
+    string api = 1;
+
+    // ID of created answer
+    int64 id = 2;
+}
+
+// Request data to read user
+message AnswerViewRequest {
+    // API versioning
+    string api = 1;
+
+    // Unique id of catalog
+    int64 id = 2;
+}
+
+// Contains user data specified by ID request
+message AnswerViewResponse{
+    // API versioning
+    string api = 1;
+
+    // Answer read for catalog ID
+    Answer answer = 2;
+}
+
+// Request data to read all answers
+message AnswerViewAllRequest {
+    // API versioning
+    string api = 1;
+}
+
+// Contains list of all users
+message AnswerViewAllResponse {
+    // API versioning
+    string api = 1;
+
+    // List of users
+    repeated Answer answers = 2;
+}
+
+service AnswerService {
+    // Create a new answer
+    rpc Create(AnswerCreateRequest) returns (AnswerCreateResponse) {
+        option (google.api.http) = {
+            post: "/v1/answer"
+            body: "*"
+        };
+    }
+
+    // Get answer by catalog ID
+    rpc View(AnswerViewRequest) returns (AnswerViewResponse) {
+        option (google.api.http) = {
+            get: "/v1/answer/{id}"
+        };
+    }
+
+    // Get all answers
+    rpc ViewAll(AnswerViewAllRequest) returns (AnswerViewAllResponse) {
+        option (google.api.http) = {
+            get: "/v1/answer"
+        };
+    }
+}

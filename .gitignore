@@ -5,3 +5,4 @@ app
 mysql
 go.sum
 log.json
+data/db/

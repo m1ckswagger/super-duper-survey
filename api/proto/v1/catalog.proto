@@ -5,7 +5,6 @@ package v1;
 import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
-import "question.proto";
 
 option go_package = "github.com/m1ckswagger/super-duper-survey/pkg/api/v1";
 
@@ -29,6 +28,28 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 		}
 	}
 };
+
+// Options for one question
+message Option {
+    // Unique integer identifier of the question
+    int64 id = 1;
+
+    // Number of question
+    int64 num = 2;
+
+    // Answer text
+    string text = 3;
+}
+
+// Question in catalog
+message Question {
+    // Unique integer identifier of the question
+    int64 id = 1;
+    // Text of the question
+    string question = 2;
+    // Possible options to choose from
+    repeated string options = 3;
+}
 
 // Catalogs we manage
 message Catalog {
@@ -142,21 +163,44 @@ message ReadAllResponse {
 // Service to manage list of catalogs
 service CatalogService {
     // Create a new catalog
-    rpc Create(CreateRequest) returns (CreateResponse);
+    rpc Create(CreateRequest) returns (CreateResponse) {
+        option (google.api.http) = {
+            post: "/v1/catalog"
+            body: "*"
+        };
+    }
 
     // Read a catalog
-    rpc Read(ReadRequest) returns (ReadResponse);
+    rpc Read(ReadRequest) returns (ReadResponse) {
+        option (google.api.http) = {
+            get: "/v1/catalog/{id}"
+        };
+    }
 
     // Update catalog
-    rpc Update(UpdateRequest) returns (UpdateResponse);
+    rpc Update(UpdateRequest) returns (UpdateResponse) {
+        option (google.api.http) = {
+            put: "/v1/catalog/{catalog.id}"
+            body: "*"
+
+            additional_bindings {
+                patch: "/v1/catalog/{catalog.id}"
+                body: "*"
+            }
+        };
+    }
 
     // Delete catalog
-    rpc Delete(DeleteRequest) returns (DeleteResponse);
+    rpc Delete(DeleteRequest) returns (DeleteResponse) {
+        option (google.api.http) = {
+            delete: "/v1/catalog/{id}"
+        };
+    }
 
     // Read all catalogs
     rpc ReadAll(ReadAllRequest) returns (ReadAllResponse) {
         option (google.api.http) = {
-            get: "/v1/catalog/all"
+            get: "/v1/catalog"
         };
     };
 }

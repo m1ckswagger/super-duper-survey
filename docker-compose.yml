@@ -1,0 +1,24 @@
+version: "3.0"
+services:
+  db:
+    image: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./data/db:/var/lib/mysql"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: survey
+      MYSQL_DATABASE: survey
+      MYSQL_USER: survey
+      MYSQL_PASSWORD: survey
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: survey-swagger-ui
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./api/swagger:/usr/share/nginx/html/swagger
+    environment:
+      URLS: "[ {url: 'swagger/v1/catalog.swagger.json', name: 'Catalog'},{ url: 'swagger/v1/user.swagger.json', name: 'User'},{url: 'swagger/v1/answer.swagger.json',name: 'Answer'}]"

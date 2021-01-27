@@ -1,0 +1,261 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Answer service",
+    "version": "1.0"
+  },
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/answer": {
+      "get": {
+        "summary": "Get all answers",
+        "operationId": "AnswerService_ViewAll",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AnswerViewAllResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "api",
+            "description": "API versioning.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AnswerService"
+        ]
+      },
+      "post": {
+        "summary": "Create a new answer",
+        "operationId": "AnswerService_Create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AnswerCreateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1AnswerCreateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AnswerService"
+        ]
+      }
+    },
+    "/v1/answer/{id}": {
+      "get": {
+        "summary": "Get answer by catalog ID",
+        "operationId": "AnswerService_View",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AnswerViewResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique id of catalog",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "api",
+            "description": "API versioning.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AnswerService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1Answer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "catalog_id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "question_id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "option_id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "session_id": {
+          "type": "string"
+        }
+      }
+    },
+    "v1AnswerCreateRequest": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "answer": {
+          "$ref": "#/definitions/v1Answer",
+          "title": "Catalog entity to add"
+        }
+      },
+      "title": "Request data to create a new answer"
+    },
+    "v1AnswerCreateResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "ID of created answer"
+        }
+      },
+      "title": "Contains data of created catalog"
+    },
+    "v1AnswerViewAllResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "answers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Answer"
+          },
+          "title": "List of users"
+        }
+      },
+      "title": "Contains list of all users"
+    },
+    "v1AnswerViewResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "answer": {
+          "$ref": "#/definitions/v1Answer",
+          "title": "Answer read for catalog ID"
+        }
+      },
+      "title": "Contains user data specified by ID request"
+    }
+  }
+}

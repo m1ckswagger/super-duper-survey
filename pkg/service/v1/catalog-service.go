@@ -18,6 +18,7 @@ const (
 )
 
 type catalogServiceServer struct {
+	v1.UnimplementedCatalogServiceServer
 	db *sql.DB
 }
 
@@ -47,7 +48,7 @@ func (s *catalogServiceServer) connect(ctx context.Context) (*sql.Conn, error) {
 }
 
 // Create new todo task
-func (s *toDoServiceServer) Create(ctx context.Context, req *v1.CreateRequest) (*v1.CreateResponse, error) {
+func (s *catalogServiceServer) Create(ctx context.Context, req *v1.CreateRequest) (*v1.CreateResponse, error) {
 	// check for valid API version requested
 	if err := s.checkAPI(req.Api); err != nil {
 		return nil, err
@@ -73,10 +74,10 @@ func (s *toDoServiceServer) Create(ctx context.Context, req *v1.CreateRequest) (
 	}
 
 	// insert catalog into db
-	res, err := c.ExecContext(ctx, "INSERT INTO Catalogs(`Title`, `Description`, `Created`, `Updated`) VALUES(?, ?, ?)",
+	res, err := c.ExecContext(ctx, "INSERT INTO Catalogs(`Title`, `Description`, `Created`, `Updated`) VALUES(?, ?, ?, ?)",
 		req.Catalog.Title, req.Catalog.Description, created, updated)
 	if err != nil {
-		return nil, status.Error(codes.Unknown, "failed to insert into Catalogs-> "+err.Eror())
+		return nil, status.Error(codes.Unknown, "failed to insert into Catalogs-> "+err.Error())
 	}
 
 	// get ID of created Catalog
@@ -125,7 +126,7 @@ func (s *catalogServiceServer) Read(ctx context.Context, req *v1.ReadRequest) (*
 	var created time.Time
 	var updated time.Time
 
-	if err := rows.Scan(&cd.Id, &cd.Title, &cd.Description, created, updated); err != nil {
+	if err := rows.Scan(&cd.Id, &cd.Title, &cd.Description, &created, &updated); err != nil {
 		return nil, status.Error(codes.Unknown, "failed to retrieve field values from Catalog row-> "+err.Error())
 	}
 
@@ -177,9 +178,10 @@ func (s *catalogServiceServer) Update(ctx context.Context, req *v1.UpdateRequest
 			return nil, status.Error(codes.InvalidArgument, "field 'updated' has invalid format-> "+err.Error())
 		}
 	*/
+
 	updated := time.Now()
 
-	res, err := c.ExecContext(ctx, "UPDATE Catalogs SET `Title`=?, `Description`=?, `Updated`=?")
+	res, err := c.ExecContext(ctx, "UPDATE Catalogs SET `Title`=?, `Description`=?, `Updated`=?", req.Catalog.Title, req.Catalog.Description, updated)
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to update Catalog-> "+err.Error())
 	}
@@ -223,7 +225,7 @@ func (s *catalogServiceServer) Delete(ctx context.Context, req *v1.DeleteRequest
 	}
 
 	if rows == 0 {
-		return nil, status.Error(codes.NotFound, fmt.Sprintf("Catalog with ID='%s' was not found", req.Id))
+		return nil, status.Error(codes.NotFound, fmt.Sprintf("Catalog with ID='%d' was not found", req.Id))
 	}
 
 	return &v1.DeleteResponse{

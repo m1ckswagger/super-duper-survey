@@ -1,0 +1,468 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "User service",
+    "version": "1.0"
+  },
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/user": {
+      "get": {
+        "summary": "View all users",
+        "operationId": "UserService_ViewAll",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UserViewAllResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "api",
+            "description": "API versioning.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      }
+    },
+    "/v1/user/login": {
+      "post": {
+        "operationId": "UserService_Login",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UserLoginResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UserLoginRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      }
+    },
+    "/v1/user/register": {
+      "post": {
+        "summary": "Register a new user",
+        "operationId": "UserService_Register",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UserRegisterResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UserRegisterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      }
+    },
+    "/v1/user/{id}": {
+      "get": {
+        "summary": "View a user",
+        "operationId": "UserService_View",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UserViewResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique email string identifying user",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "api",
+            "description": "API versioning.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      }
+    },
+    "/v1/user/{user.id}": {
+      "put": {
+        "summary": "Update user",
+        "operationId": "UserService_Update",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UserUpdateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "user.id",
+            "description": "Unique id of user",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UserUpdateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      },
+      "patch": {
+        "summary": "Update user",
+        "operationId": "UserService_Update2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UserUpdateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "user.id",
+            "description": "Unique id of user",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UserUpdateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "Unique id of user"
+        },
+        "email": {
+          "type": "string",
+          "title": "Unique email identifiying one user"
+        },
+        "firstname": {
+          "type": "string",
+          "title": "First name of the user"
+        },
+        "lastname": {
+          "type": "string",
+          "title": "Last name of the user"
+        },
+        "password": {
+          "type": "string",
+          "title": "User password used for login"
+        },
+        "is_admin": {
+          "type": "boolean",
+          "title": "Determines whether user is admin"
+        },
+        "is_superuser": {
+          "type": "boolean",
+          "title": "Determines whether user is superuser"
+        }
+      },
+      "title": "User object"
+    },
+    "v1UserLoginRequest": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "username": {
+          "type": "string",
+          "title": "User name to authenticate"
+        },
+        "password": {
+          "type": "string",
+          "title": "Password for authentication"
+        }
+      },
+      "title": "Request data to authenticate as user"
+    },
+    "v1UserLoginResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "token": {
+          "type": "string",
+          "title": "Login token"
+        }
+      },
+      "title": "Contains data of user login"
+    },
+    "v1UserRegisterRequest": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "user": {
+          "$ref": "#/definitions/v1User",
+          "title": "User to register"
+        }
+      },
+      "title": "Request data to read catalog"
+    },
+    "v1UserRegisterResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "User ID of created user"
+        }
+      },
+      "title": "Contains catalog data specified by ID request"
+    },
+    "v1UserUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "user": {
+          "$ref": "#/definitions/v1User",
+          "title": "User entity to update"
+        }
+      },
+      "title": "Request data to update user"
+    },
+    "v1UserUpdateResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "updated": {
+          "type": "string",
+          "format": "int64",
+          "title": "Number of updated entities"
+        }
+      },
+      "title": "Contains status of update operation"
+    },
+    "v1UserViewAllResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1User"
+          },
+          "title": "List of users"
+        }
+      },
+      "title": "Contains list of all users"
+    },
+    "v1UserViewResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string",
+          "title": "API versioning"
+        },
+        "user": {
+          "$ref": "#/definitions/v1User",
+          "title": "User read by ID"
+        }
+      },
+      "title": "Contains user data specified by ID request"
+    }
+  }
+}
