@@ -27,7 +27,7 @@
                 <div class="btn-group-vertical btn-group-toggle" role="group" data-toggle="buttons" aria-label="Basic example">
                     {{range .Options}}
                     <label class="btn btn-secondary">
-                        <input type="radio" name="{{$id}}" id="question{{$id}}" value="{{.}}" autocomplete="off" required>{{.}}
+                        <input type="radio" name="{{$id}}" id="question{{$id}}" value="{{.Num}}" autocomplete="off" required>{{.Text}}
                     </label>
                     {{end}}
                 </div>

@@ -73,9 +73,14 @@ func (s *catalogServiceServer) Create(ctx context.Context, req *v1.CreateRequest
 		return nil, status.Error(codes.InvalidArgument, "field 'updated' has invalid format-> "+err.Error())
 	}
 
+	// get timestamp data and check if valid
+	due, err := ptypes.Timestamp(req.Catalog.Due)
+	if err != nil {
+		return nil, status.Error(codes.InvalidArgument, "field 'updated' has invalid format-> "+err.Error())
+	}
 	// insert catalog into db
-	res, err := c.ExecContext(ctx, "INSERT INTO Catalogs(`Title`, `Description`, `Created`, `Updated`) VALUES(?, ?, ?, ?)",
-		req.Catalog.Title, req.Catalog.Description, created, updated)
+	res, err := c.ExecContext(ctx, "INSERT INTO Catalogs(`Title`, `Description`, `Created`, `Updated`, `Due`) VALUES(?, ?, ?, ?, ?)",
+		req.Catalog.Title, req.Catalog.Description, created, updated, due)
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to insert into Catalogs-> "+err.Error())
 	}
@@ -84,6 +89,29 @@ func (s *catalogServiceServer) Create(ctx context.Context, req *v1.CreateRequest
 	id, err := res.LastInsertId()
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to retrieve ID for created catalog-> "+err.Error())
+	}
+
+	for _, quest := range req.Catalog.Questions {
+		res, err = c.ExecContext(ctx, "INSERT INTO Questions(`CatalogID`, `Question`, `Num`) VALUES(?, ?, ?)",
+			id, quest.Question, quest.Num)
+		if err != nil {
+			return nil, status.Error(codes.Unknown, "failed to insert into Questions-> "+err.Error())
+		}
+		qid, err := res.LastInsertId()
+		if err != nil {
+			return nil, status.Error(codes.Unknown, "failed to retrieve ID for created question-> "+err.Error())
+		}
+		for _, opt := range quest.Options {
+			res, err = c.ExecContext(ctx, "INSERT INTO Options(`QuestionID`, `Text`, `Num`) VALUES(?, ?, ?)",
+				qid, opt.Text, opt.Num)
+			if err != nil {
+				return nil, status.Error(codes.Unknown, "failed to insert into Questions-> "+err.Error())
+			}
+			_, err := res.LastInsertId()
+			if err != nil {
+				return nil, status.Error(codes.Unknown, "failed to retrieve ID for created question-> "+err.Error())
+			}
+		}
 	}
 
 	return &v1.CreateResponse{
@@ -106,7 +134,7 @@ func (s *catalogServiceServer) Read(ctx context.Context, req *v1.ReadRequest) (*
 	defer c.Close()
 
 	// query Catalog by ID
-	rows, err := c.QueryContext(ctx, "SELECT `ID`, `Title`, `Description`, `Created`, `Updated` FROM Catalogs WHERE `ID`=?",
+	rows, err := c.QueryContext(ctx, "SELECT `ID`, `Title`, `Description`, `Created`, `Updated`, `Due` FROM Catalogs WHERE `ID`=?",
 		req.Id)
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to select from Catalogs-> "+err.Error())
@@ -125,8 +153,9 @@ func (s *catalogServiceServer) Read(ctx context.Context, req *v1.ReadRequest) (*
 	var cd v1.Catalog
 	var created time.Time
 	var updated time.Time
+	var due time.Time
 
-	if err := rows.Scan(&cd.Id, &cd.Title, &cd.Description, &created, &updated); err != nil {
+	if err := rows.Scan(&cd.Id, &cd.Title, &cd.Description, &created, &updated, &due); err != nil {
 		return nil, status.Error(codes.Unknown, "failed to retrieve field values from Catalog row-> "+err.Error())
 	}
 
@@ -140,9 +169,49 @@ func (s *catalogServiceServer) Read(ctx context.Context, req *v1.ReadRequest) (*
 		return nil, status.Error(codes.Unknown, "field 'Updated' has invalid format-> "+err.Error())
 	}
 
+	cd.Due, err = ptypes.TimestampProto(due)
+	if err != nil {
+		return nil, status.Error(codes.Unknown, "field 'Updated' has invalid format-> "+err.Error())
+	}
+
 	if rows.Next() {
 		return nil, status.Error(codes.Unknown, fmt.Sprintf("found multiple Catalog rows with ID='%d'", req.Id))
 	}
+
+	qRows, err := c.QueryContext(ctx, "SELECT `ID`, `Question`, `Num` FROM Questions WHERE `CatalogID`=?",
+		cd.Id)
+	if err != nil {
+		return nil, status.Error(codes.Unknown, "failed to select from Questions-> "+err.Error())
+	}
+	defer qRows.Close()
+
+	var questions []*v1.Question
+	for qRows.Next() {
+		quest := new(v1.Question)
+		if err := qRows.Scan(&quest.Id, &quest.Question, &quest.Num); err != nil {
+			return nil, status.Error(codes.Unknown, "failed to retrieve field values from Question row-> "+err.Error())
+		}
+		questions = append(questions, quest)
+	}
+	for _, question := range questions {
+		optRows, err := c.QueryContext(ctx, "SELECT `ID`, `Num`, `Text` FROM Options WHERE `QuestionID`=?",
+			question.Id)
+		if err != nil {
+			return nil, status.Error(codes.Unknown, "failed to select from Options-> "+err.Error())
+		}
+
+		var options []*v1.Option
+		for optRows.Next() {
+			option := new(v1.Option)
+			if err := optRows.Scan(&option.Id, &option.Num, &option.Text); err != nil {
+				return nil, status.Error(codes.Unknown, "failed to retrieve field values from Options row-> "+err.Error())
+			}
+			options = append(options, option)
+		}
+		optRows.Close()
+		question.Options = append(question.Options, options...)
+	}
+	cd.Questions = append(cd.Questions, questions...)
 
 	return &v1.ReadResponse{
 		Api:     apiVersion,
@@ -248,7 +317,7 @@ func (s *catalogServiceServer) ReadAll(ctx context.Context, req *v1.ReadAllReque
 	defer c.Close()
 
 	// get Catalog list
-	rows, err := c.QueryContext(ctx, "SELECT `ID`, `Title`, `Description`, `Created`, `Updated` FROM Catalogs")
+	rows, err := c.QueryContext(ctx, "SELECT `ID`, `Title`, `Description`, `Created`, `Updated`, `Due` FROM Catalogs")
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to select from Catalogs-> "+err.Error())
 	}
@@ -256,11 +325,12 @@ func (s *catalogServiceServer) ReadAll(ctx context.Context, req *v1.ReadAllReque
 
 	var created time.Time
 	var updated time.Time
+	var due time.Time
 
 	list := []*v1.Catalog{}
 	for rows.Next() {
 		cata := new(v1.Catalog)
-		if err := rows.Scan(&cata.Id, &cata.Title, &cata.Description, &created, &updated); err != nil {
+		if err := rows.Scan(&cata.Id, &cata.Title, &cata.Description, &created, &updated, &due); err != nil {
 			return nil, status.Error(codes.Unknown, "failed to retrieve field values from Catalog row-> "+err.Error())
 		}
 
@@ -272,6 +342,10 @@ func (s *catalogServiceServer) ReadAll(ctx context.Context, req *v1.ReadAllReque
 		if err != nil {
 			return nil, status.Error(codes.Unknown, "field 'Updated' has invalid format-> "+err.Error())
 		}
+		cata.Due, err = ptypes.TimestampProto(due)
+		if err != nil {
+			return nil, status.Error(codes.Unknown, "field 'Updated' has invalid format-> "+err.Error())
+		}
 		list = append(list, cata)
 	}
 
@@ -280,6 +354,50 @@ func (s *catalogServiceServer) ReadAll(ctx context.Context, req *v1.ReadAllReque
 	}
 
 	return &v1.ReadAllResponse{
+		Api:      apiVersion,
+		Catalogs: list,
+	}, nil
+}
+
+func (s *catalogServiceServer) CheckDue(ctx context.Context, req *v1.DueCheckRequest) (*v1.DueCheckResponse, error) {
+	// check API version
+	if err := s.checkAPI(req.Api); err != nil {
+		return nil, err
+	}
+
+	// get SQL connection from pool
+	c, err := s.connect(ctx)
+	if err != nil {
+		return nil, err
+	}
+	defer c.Close()
+
+	// get Catalog list
+	rows, err := c.QueryContext(ctx, "SELECT `ID`, `Title`, `Description`, `Due` FROM Catalogs WHERE `Due` < CURDATE();")
+	if err != nil {
+		return nil, status.Error(codes.Unknown, "failed to select from Catalogs-> "+err.Error())
+	}
+	defer rows.Close()
+
+	var due time.Time
+	list := []*v1.Catalog{}
+	for rows.Next() {
+		cata := new(v1.Catalog)
+		if err := rows.Scan(&cata.Id, &cata.Title, &cata.Description, &due); err != nil {
+			return nil, status.Error(codes.Unknown, "failed to retrieve field values from Catalog row-> "+err.Error())
+		}
+		cata.Due, err = ptypes.TimestampProto(due)
+		if err != nil {
+			return nil, status.Error(codes.Unknown, "field 'Updated' has invalid format-> "+err.Error())
+		}
+		list = append(list, cata)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, status.Error(codes.Unknown, "failed to retrieve data from Catalogs-> "+err.Error())
+	}
+
+	return &v1.DueCheckResponse{
 		Api:      apiVersion,
 		Catalogs: list,
 	}, nil

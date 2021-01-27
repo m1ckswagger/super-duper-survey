@@ -24,7 +24,7 @@ var db *sql.DB
 func main() {
 	var err error
 	fmt.Println(err)
-	db, err = sql.Open("mysql", "user:password@tcp(127.0.0.1:3306)/surveys")
+	db, err = sql.Open("mysql", "root:survey@tcp(db:3306)/survey")
 	if err != nil {
 		log.Panic(err)
 	}
@@ -44,7 +44,7 @@ func main() {
 	initializeRoutes()
 	log.Println("Starting router")
 	//router.RunTLS(":443", "cert/fullchain.pem", "cert/privkey.pem")
-	router.Run("localhost:8080")
+	router.Run(":80")
 }
 
 func render(c *gin.Context, data gin.H, templateName string) {

@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/md5"
 	"database/sql"
+	"encoding/hex"
 	"fmt"
 
 	v1 "github.com/m1ckswagger/super-duper-survey/pkg/api/v1"
@@ -54,7 +55,8 @@ func (s *userServiceServer) Register(ctx context.Context, req *v1.UserRegisterRe
 		return nil, err
 	}
 	defer c.Close()
-	md5pass := md5.Sum([]byte(req.User.Password))
+	md5hash := md5.Sum([]byte(req.User.Password))
+	md5pass := hex.EncodeToString(md5hash[:])
 	// insert user into db
 	res, err := c.ExecContext(ctx, "INSERT INTO Users(`Email`, `FirstName`, `LastName`, `Password`, `IsAdmin`, `IsSuperUser`) VALUES(?, ?, ?, ?, ?, ?)",
 		req.User.Email, req.User.Firstname, req.User.Lastname, md5pass, req.User.IsAdmin, req.User.IsSuperuser)
@@ -154,7 +156,7 @@ func (s *userServiceServer) Update(ctx context.Context, req *v1.UserUpdateReques
 	}, nil
 }
 
-func (s *userServiceServer) ReadAll(ctx context.Context, req *v1.UserViewAllRequest) (*v1.UserViewAllResponse, error) {
+func (s *userServiceServer) ViewAll(ctx context.Context, req *v1.UserViewAllRequest) (*v1.UserViewAllResponse, error) {
 	// check API version
 	if err := s.checkAPI(req.Api); err != nil {
 		return nil, err

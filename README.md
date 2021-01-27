@@ -1,4 +1,6 @@
-# Shardik
+# Survey
+
+**All third party code used in this package is located in subfolder `third_party`**
 
 ## Setting up the go
 1. Init the project

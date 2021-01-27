@@ -48,10 +48,12 @@ message Question {
     // Text of the question
     string question = 2;
     // Possible options to choose from
-    repeated string options = 3;
+    repeated Option options = 3;
+    // Number of question
+    int64 num = 4;
 }
 
-// Catalogs we manage
+// Catalog Model
 message Catalog {
     // Unique integer identifier of the catalog
     int64 id = 1;
@@ -69,6 +71,10 @@ message Catalog {
     google.protobuf.Timestamp updated = 5;
 
     repeated Question questions = 6;
+
+    // Date an time when catalog is due
+    google.protobuf.Timestamp due = 7;
+
 }
 
 // Request data to create a new catalog
@@ -80,7 +86,7 @@ message CreateRequest {
     Catalog catalog = 2;
 }
 
-// Contains data of created catalog
+// Response data of created catalog
 message CreateResponse {
     // API versioning
     string api = 1;
@@ -98,7 +104,7 @@ message ReadRequest {
     int64 id = 2;
 }
 
-// Contains catalog data specified by ID request
+// Response data of read catalog
 message ReadResponse{
     // API versioning
     string api = 1;
@@ -117,7 +123,7 @@ message UpdateRequest {
     Catalog catalog = 2;
 }
 
-// Contains status of update operation
+// Respons data of update request
 message UpdateResponse {
     // API versioning
     string api = 1;
@@ -135,7 +141,7 @@ message DeleteRequest {
     int64 id = 2;
 }
 
-// Contains status of delete operation
+// Response data of delete request
 message DeleteResponse {
     // API versioning
     string api = 1;
@@ -151,12 +157,22 @@ message ReadAllRequest {
     string api = 1;
 }
 
-// Contains list of all catalogs
+// Response data of read all request
 message ReadAllResponse {
     // API versioning
     string api = 1;
 
     // List of all todo tasks
+    repeated Catalog catalogs = 2;
+}
+
+message DueCheckRequest {
+    string api = 1;
+}
+
+message DueCheckResponse {
+    string api = 1;
+    // List of due Catalogs
     repeated Catalog catalogs = 2;
 }
 
@@ -203,4 +219,10 @@ service CatalogService {
             get: "/v1/catalog"
         };
     };
+
+    rpc CheckDue(DueCheckRequest) returns (DueCheckResponse) {
+        option (google.api.http) = {
+            get: "/v1/check/catalog"
+        };
+    }
 }

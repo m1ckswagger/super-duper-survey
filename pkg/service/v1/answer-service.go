@@ -54,8 +54,8 @@ func (s *answerServiceServer) Create(ctx context.Context, req *v1.AnswerCreateRe
 	}
 	defer c.Close()
 	// insert answer into db
-	res, err := c.ExecContext(ctx, "INSERT INTO Answers(`CatalogID`, `QuestionID`, `OptionID`, `SessionID`) VALUES(?, ?, ?, ?)",
-		req.Answer.CatalogId, req.Answer.QuestionId, req.Answer.OptionId, req.Answer.SessionId)
+	res, err := c.ExecContext(ctx, "INSERT INTO Answers(`CatalogID`, `QuestionNum`, `OptionNum`, `SessionID`) VALUES(?, ?, ?, ?)",
+		req.Answer.CatalogId, req.Answer.QuestionNum, req.Answer.OptionNum, req.Answer.SessionId)
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to insert into Answers-> "+err.Error())
 	}
@@ -86,7 +86,7 @@ func (s *answerServiceServer) View(ctx context.Context, req *v1.AnswerViewReques
 	defer c.Close()
 
 	// query Answer by ID
-	rows, err := c.QueryContext(ctx, "SELECT `ID`, `SurveyID`, `QuestionID`, `OptionID`, `SessionID` FROM Answers WHERE `ID`=?",
+	rows, err := c.QueryContext(ctx, "SELECT `ID`, `CatalogID`, `QuestionID`, `OptionID`, `SessionID` FROM Answers WHERE `ID`=?",
 		req.Id)
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to select from Answers-> "+err.Error())
@@ -104,7 +104,7 @@ func (s *answerServiceServer) View(ctx context.Context, req *v1.AnswerViewReques
 	// data for Answer
 	var ans v1.Answer
 
-	if err := rows.Scan(&ans.Id, &ans.CatalogId, &ans.QuestionId, &ans.OptionId); err != nil {
+	if err := rows.Scan(&ans.Id, &ans.CatalogId, &ans.QuestionNum, &ans.OptionNum); err != nil {
 		return nil, status.Error(codes.Unknown, "failed to retrieve field values from Answer row-> "+err.Error())
 	}
 
@@ -118,7 +118,7 @@ func (s *answerServiceServer) View(ctx context.Context, req *v1.AnswerViewReques
 	}, nil
 }
 
-func (s *answerServiceServer) ReadAll(ctx context.Context, req *v1.AnswerViewAllRequest) (*v1.AnswerViewAllResponse, error) {
+func (s *answerServiceServer) ViewAll(ctx context.Context, req *v1.AnswerViewAllRequest) (*v1.AnswerViewAllResponse, error) {
 	// check API version
 	if err := s.checkAPI(req.Api); err != nil {
 		return nil, err
@@ -132,7 +132,7 @@ func (s *answerServiceServer) ReadAll(ctx context.Context, req *v1.AnswerViewAll
 	defer c.Close()
 
 	// get Answer list
-	rows, err := c.QueryContext(ctx, "SELECT `ID`, `SurveyID`, `QuestionID`, `OptionID`, `SessionID` FROM Answers")
+	rows, err := c.QueryContext(ctx, "SELECT `ID`, `CatalogID`, `QuestionNum`, `OptionNum`, `SessionID` FROM Answers")
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to select from Answers-> "+err.Error())
 	}
@@ -141,7 +141,7 @@ func (s *answerServiceServer) ReadAll(ctx context.Context, req *v1.AnswerViewAll
 	list := []*v1.Answer{}
 	for rows.Next() {
 		ans := new(v1.Answer)
-		if err := rows.Scan(&ans.Id, &ans.CatalogId, &ans.QuestionId, &ans.OptionId, &ans.SessionId); err != nil {
+		if err := rows.Scan(&ans.Id, &ans.CatalogId, &ans.QuestionNum, &ans.OptionNum, &ans.SessionId); err != nil {
 			return nil, status.Error(codes.Unknown, "failed to retrieve field values from Answer row-> "+err.Error())
 		}
 		list = append(list, ans)

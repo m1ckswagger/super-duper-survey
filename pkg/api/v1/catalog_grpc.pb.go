@@ -27,6 +27,7 @@ type CatalogServiceClient interface {
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
 	// Read all catalogs
 	ReadAll(ctx context.Context, in *ReadAllRequest, opts ...grpc.CallOption) (*ReadAllResponse, error)
+	CheckDue(ctx context.Context, in *DueCheckRequest, opts ...grpc.CallOption) (*DueCheckResponse, error)
 }
 
 type catalogServiceClient struct {
@@ -82,6 +83,15 @@ func (c *catalogServiceClient) ReadAll(ctx context.Context, in *ReadAllRequest, 
 	return out, nil
 }
 
+func (c *catalogServiceClient) CheckDue(ctx context.Context, in *DueCheckRequest, opts ...grpc.CallOption) (*DueCheckResponse, error) {
+	out := new(DueCheckResponse)
+	err := c.cc.Invoke(ctx, "/v1.CatalogService/CheckDue", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CatalogServiceServer is the server API for CatalogService service.
 // All implementations must embed UnimplementedCatalogServiceServer
 // for forward compatibility
@@ -96,6 +106,7 @@ type CatalogServiceServer interface {
 	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
 	// Read all catalogs
 	ReadAll(context.Context, *ReadAllRequest) (*ReadAllResponse, error)
+	CheckDue(context.Context, *DueCheckRequest) (*DueCheckResponse, error)
 	mustEmbedUnimplementedCatalogServiceServer()
 }
 
@@ -117,6 +128,9 @@ func (UnimplementedCatalogServiceServer) Delete(context.Context, *DeleteRequest)
 }
 func (UnimplementedCatalogServiceServer) ReadAll(context.Context, *ReadAllRequest) (*ReadAllResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReadAll not implemented")
+}
+func (UnimplementedCatalogServiceServer) CheckDue(context.Context, *DueCheckRequest) (*DueCheckResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckDue not implemented")
 }
 func (UnimplementedCatalogServiceServer) mustEmbedUnimplementedCatalogServiceServer() {}
 
@@ -221,6 +235,24 @@ func _CatalogService_ReadAll_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CatalogService_CheckDue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DueCheckRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CatalogServiceServer).CheckDue(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.CatalogService/CheckDue",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CatalogServiceServer).CheckDue(ctx, req.(*DueCheckRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _CatalogService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "v1.CatalogService",
 	HandlerType: (*CatalogServiceServer)(nil),
@@ -244,6 +276,10 @@ var _CatalogService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ReadAll",
 			Handler:    _CatalogService_ReadAll_Handler,
+		},
+		{
+			MethodName: "CheckDue",
+			Handler:    _CatalogService_CheckDue_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

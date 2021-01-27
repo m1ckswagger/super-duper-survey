@@ -184,11 +184,11 @@
           "type": "string",
           "format": "int64"
         },
-        "question_id": {
+        "question_num": {
           "type": "string",
           "format": "int64"
         },
-        "option_id": {
+        "option_num": {
           "type": "string",
           "format": "int64"
         },

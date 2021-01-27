@@ -276,6 +276,43 @@
           "CatalogService"
         ]
       }
+    },
+    "/v1/check/catalog": {
+      "get": {
+        "operationId": "CatalogService_CheckDue",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DueCheckResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "api",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "CatalogService"
+        ]
+      }
     }
   },
   "definitions": {
@@ -343,9 +380,14 @@
           "items": {
             "$ref": "#/definitions/v1Question"
           }
+        },
+        "due": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Date an time when catalog is due"
         }
       },
-      "title": "Catalogs we manage"
+      "title": "Catalog Model"
     },
     "v1CreateRequest": {
       "type": "object",
@@ -374,7 +416,7 @@
           "title": "ID of created catalog"
         }
       },
-      "title": "Contains data of created catalog"
+      "title": "Response data of created catalog"
     },
     "v1DeleteResponse": {
       "type": "object",
@@ -389,7 +431,42 @@
           "title": "Contains number of entities that have been deleted\nEquals 1 in case of successful delete"
         }
       },
-      "title": "Contains status of delete operation"
+      "title": "Response data of delete request"
+    },
+    "v1DueCheckResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string"
+        },
+        "catalogs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Catalog"
+          },
+          "title": "List of due Catalogs"
+        }
+      }
+    },
+    "v1Option": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "Unique integer identifier of the question"
+        },
+        "num": {
+          "type": "string",
+          "format": "int64",
+          "title": "Number of question"
+        },
+        "text": {
+          "type": "string",
+          "title": "Answer text"
+        }
+      },
+      "title": "Options for one question"
     },
     "v1Question": {
       "type": "object",
@@ -406,9 +483,14 @@
         "options": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/v1Option"
           },
           "title": "Possible options to choose from"
+        },
+        "num": {
+          "type": "string",
+          "format": "int64",
+          "title": "Number of question"
         }
       },
       "title": "Question in catalog"
@@ -428,7 +510,7 @@
           "title": "List of all todo tasks"
         }
       },
-      "title": "Contains list of all catalogs"
+      "title": "Response data of read all request"
     },
     "v1ReadResponse": {
       "type": "object",
@@ -442,7 +524,7 @@
           "title": "Catalog read by ID"
         }
       },
-      "title": "Contains catalog data specified by ID request"
+      "title": "Response data of read catalog"
     },
     "v1UpdateRequest": {
       "type": "object",
@@ -471,7 +553,7 @@
           "title": "Number of updated entities"
         }
       },
-      "title": "Contains status of update operation"
+      "title": "Respons data of update request"
     }
   }
 }

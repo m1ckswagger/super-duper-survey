@@ -23,7 +23,12 @@ type RegularCatalog struct {
 type Question struct {
 	ID       int      `json:"id"`
 	Question string   `json:"question"`
-	Options  []string `json:"options"`
+	Options  []Option `json:"options"`
+}
+
+type Option struct {
+	Num  int    `json:"num"`
+	Text string `json:"text"`
 }
 
 type OCAICatalog struct {
@@ -46,7 +51,7 @@ type OCAIQuestion struct {
 }
 
 func initCatalogs() {
-	ocaq := NewRegularCatalog("Organizational Culture Assessment Questionaire", "data/ocaq.txt", "data/ocaq.json", []string{"Yes", "No"})
+	ocaq := NewRegularCatalog("Organizational Culture Assessment Questionaire", "data/ocaq.txt", "data/ocaq.json", []Option{{1, "Yes"}, {2, "No"}})
 	ocaq.Description = `The Organizational Culture Assessment Questionnaire (OCAQ) is based on the work of Dr. Talcott
 	Parsons, a sociologist at Harvard. Parsons developed a framework and theory of action in social
 	systems. He argued that all organizations must carry out four crucial functions if they are to survive for
@@ -55,12 +60,12 @@ func initCatalogs() {
 	organizations achieve their goals is especially important, yet often neglected. This factor has been
 	made into a separate, fifth scale: customer orientation.`
 	catalogs = append(catalogs, ocaq)
-	sheff := NewRegularCatalog("Sheffield Culture Survey", "data/sheffield.txt", "data/sheffield.json", []string{
-		"Strongly disagree",
-		"Disagree",
-		"Neutral",
-		"Agree",
-		"Strongly Agree",
+	sheff := NewRegularCatalog("Sheffield Culture Survey", "data/sheffield.txt", "data/sheffield.json", []Option{
+		{1, "Strongly disagree"},
+		{2, "Disagree"},
+		{3, "Neutral"},
+		{4, "Agree"},
+		{5, "Strongly Agree"},
 	})
 	sheff.Description = `The questions related to the key elements of a generative culture as follows:
 	1) Shared sense of purpose
@@ -87,7 +92,7 @@ func getOCAICatalog() *OCAICatalog {
 	return ocai
 }
 
-func NewRegularCatalog(name, in, out string, options []string) *RegularCatalog {
+func NewRegularCatalog(name, in, out string, options []Option) *RegularCatalog {
 	inFile, err := os.OpenFile(in, os.O_RDONLY, 0644)
 	if err != nil {
 		panic(err)

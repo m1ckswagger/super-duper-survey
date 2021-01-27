@@ -60,10 +60,11 @@ func RunServer() error {
 
 	v1Catalog := v1.NewCatalogServiceServer(db)
 	v1User := v1.NewUserServiceServer(db)
+	v1Answer := v1.NewAnswerServiceServer(db)
 
 	go func() {
 		_ = rest.RunServer(ctx, cfg.GRPCPort, cfg.HTTPPort)
 	}()
 
-	return grpc.RunServer(ctx, v1Catalog, v1User, cfg.GRPCPort)
+	return grpc.RunServer(ctx, v1Catalog, v1User, v1Answer, cfg.GRPCPort)
 }

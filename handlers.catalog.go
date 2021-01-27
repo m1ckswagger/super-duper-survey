@@ -65,7 +65,7 @@ func getCatalog(c *gin.Context) {
 func submitCatalog(c *gin.Context) {
 	if catalogID, err := strconv.Atoi(c.Param("catalog_id")); err == nil {
 		if catalog, err := getCatalogByID(catalogID); err == nil {
-			queryPrep := "INSERT INTO `answers` (`surveyID`, `session_id`, `num`, `answer`) " +
+			queryPrep := "INSERT INTO `Answers` (`CatalogID`, `SessionID`, `QuestionNum`, `OptionNum`) " +
 				"VALUES (%d, '%s', %d, '%s');"
 			session := sessions.Default(c)
 			id := session.Get("ID")
@@ -81,6 +81,7 @@ func submitCatalog(c *gin.Context) {
 			c.Request.ParseForm()
 			for k, v := range c.Request.PostForm {
 				num, _ := strconv.Atoi(k)
+				// fmt.Println(id, num, v)
 				query := fmt.Sprintf(queryPrep, catalog.ID, id, num, v[0])
 				_, err := db.Exec(query)
 				if err != nil {
