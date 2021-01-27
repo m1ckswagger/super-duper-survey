@@ -2,11 +2,10 @@ FROM golang
 
 ADD . /go/src/survey
 
-WORKDIR /go/src/survey/cmd/server
+WORKDIR /go/src/survey
 
 RUN go mod tidy
-RUN go build
 
-ENTRYPOINT ./server
+ENTRYPOINT go run main.go -grpc-port=9090 -http-port=8080 -db-host=127.0.0.1 -db-user=root -db-password=survey -db-schema=surve
 
 EXPOSE 433
